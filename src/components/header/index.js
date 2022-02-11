@@ -4,6 +4,7 @@ import { useHistory } from 'react-router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HicetnuncContext } from '../../context/HicetnuncContext'
 import { Footer } from '../footer'
+// import { VoteBanner } from '../vote-banner'
 import { Container, Padding } from '../layout'
 import { Button, Primary } from '../button'
 import { fadeIn } from '../../utils/motion'
@@ -27,6 +28,7 @@ export const Header = () => {
   useEffect(() => {
     context.setAccount()
     context.setTheme(getItem('theme') || setItem('theme', 'dark'))
+    context.setLogo()
   }, [])
 
   // we assume user isn't connected
@@ -36,7 +38,7 @@ export const Header = () => {
   if (context.acc?.address) {
     // is menu closed?
     if (context.collapsed) {
-      const proxyAddress = context.proxyAddress ? ' (' + context.proxyAddress + ')' : ''
+      const proxyAddress = context.proxyAddress ? ` (${context.proxyName || walletPreview(context.proxyAddress)})` : ''
       button = walletPreview(context.acc.address) + proxyAddress
     } else {
       // menu is open
@@ -46,10 +48,11 @@ export const Header = () => {
 
   //const activeAccount = await wallet.client.getActiveAccount()
   //console.log(activeAccount)
-  const handleRoute = (path) => {
+  const handleRoute = (path, data) => {
     context.setMenu(true)
-    history.push(path)
+    history.push(path, data)
   }
+
 
   const handleSyncUnsync = () => {
     if (context.acc?.address && !context.collapsed) {
@@ -63,39 +66,31 @@ export const Header = () => {
 
   return (
     <>
+      {/* <VoteBanner /> */}
       <header className={styles.container}>
         <div className={styles.content}>
-          <a href='/'>
+          <Button onClick={() => handleRoute('/')}>
             <div className={styles.logo}>
               {/* HIC LOGO */}
               {true && (
-                <svg viewBox="0 0 196.87 53.23" fill={'var(--text-color)'}>
-                  <path
-                    d="M228.9,79.31H211.51a2.26,2.26,0,0,1-.35-.34.75.75,0,0,1-.16-.42c0-11.42,0-22.85,0-34.43H193.24v35H175.41V26.27H228.9Z"
-                    transform="translate(-32.03 -26.27)"
-                  />
-                  <path
-                    d="M67.74,43.78V26.42H85.41V79.19H67.91V62.38a4.24,4.24,0,0,0-.52-.57.77.77,0,0,0-.42-.17H50V79.08H32V26.48H49.78v17.3Z"
-                    transform="translate(-32.03 -26.27)"
-                  />
-                  <path
-                    d="M103.62,43.79V26.43h53.6c.09,5.62,0,11.41.05,17.36Z"
-                    transform="translate(-32.03 -26.27)"
-                  />
-                  <path
-                    d="M103.71,61.71h53.38V78.84c-4.05.69-38.16.91-53.38.31Z"
-                    transform="translate(-32.03 -26.27)"
-                  />
-                </svg>
+                <img src={`https://teia.art/logos/${context.theme}/${context.logo}`} alt="teia"></img>
               )}
               {/* PRIDE LOGO */}
               {false && <img src="/hen-pride.gif" alt="pride 2021" />}
             </div>
-          </a>
+          </Button>
 
           <div className={styles.right}>
+            {!context.collapsed && context.proxyAddress && (
+              <div className={styles.mr}>
+                <Button onClick={() => context.setProxyAddress(null)} secondary>
+                  <Primary>exit collab</Primary>
+                </Button>
+              </div>
+            )}
+
             <Button onClick={handleSyncUnsync} secondary>
-              <Primary>{button}</Primary>
+              <Primary>{button}</Primary> {/* Main address display here */}
             </Button>
 
             <Button onClick={context.toogleNavbar} secondary>
@@ -116,8 +111,8 @@ export const Header = () => {
                 <nav className={styles.content}>
                   <ul>
                     <li>
-                      <Button onClick={() => handleRoute('/')}>
-                        <Primary>home</Primary>
+                      <Button onClick={() => handleRoute('/explore')}>
+                        <Primary>explore</Primary>
                       </Button>
                     </li>
                     <li>
@@ -132,17 +127,22 @@ export const Header = () => {
                         </Primary>
                       </Button>
                     </li>
-{/*                     <li>
+                    <li>
                       <Button onClick={() => handleRoute('/collaborate')}>
                         <Primary>collaborate</Primary>
                       </Button>
-                    </li> */}
+                    </li>
                     <li>
-                      <Button onClick={() => handleRoute('/sync')}>
+                      <Button onClick={() => handleRoute('/sync', 'tz')}>
                         <Primary>manage assets</Primary>
                       </Button>
                     </li>
-                    { context.acc?.address ?
+                    <li>
+                      <Button onClick={() => handleRoute('/sync', 'friends')}>
+                        <Primary>friends</Primary>
+                      </Button>
+                    </li>
+                    {context.acc?.address ?
                       <li>
                         <Button onClick={() => handleRoute('/config')}>
                           <Primary>edit profile</Primary>

@@ -1,16 +1,20 @@
 @import '../../styles/variables.scss';
 @import '../../styles/layout.scss';
 
+.outer__container {
+
+}
+
 .container {
   position: fixed;
   width: 100%;
+  z-index: 1000;
   height: 60px;
   padding: 0 #{$mobile-padding};
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color #{$theme-duration} ease-out,
     color #{$theme-duration} ease-out;
-  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,17 +34,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 22.5px;
+      color: var(--text-color);
+      font-size: 22px;
 
       svg {
-        height: 22.5px;
         // fill: var(--text-color);
         transition: fill #{$theme-duration} ease-out;
       }
 
       img {
         width: auto;
-        height: 37px;
+        height: 32px;
       }
     }
 
@@ -61,6 +65,12 @@
       }
     }
   }
+}
+
+.mr {
+  padding-right: 10px;
+  border-right: 1px solid var(--border-color);
+  margin-right: 10px;
 }
 
 .menu {

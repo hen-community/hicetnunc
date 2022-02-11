@@ -1,32 +1,34 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { PATH } from '../../constants'
-import { Button, Primary, Purchase } from '../button'
+import { Button, Primary, Purchase, Secondary } from '../button'
 import { HicetnuncContext } from '../../context/HicetnuncContext'
 import { walletPreview } from '../../utils/string'
 import styles from './styles.module.scss'
+import collabStyles from '../collab/styles.module.scss'
+import { SigningUI } from '../collab/sign/SigningUI'
+import { SigningSummary } from '../collab/show/SigningSummary'
 import { CollabIssuerInfo } from '../collab/show/CollabIssuerInfo'
+import { CollaboratorType } from '../collab/constants'
+import classNames from 'classnames'
 
 const _ = require('lodash')
 
 export const ItemInfo = ({
   id,
-  creator_id,
-  owners,
   swaps,
   creator,
-  // transfered,
+  is_signed,
+  token_signatures,
   feed,
   token_holders,
   supply,
-  // total_amount,
-  hDAO_balance,
   isDetailView,
   restricted
 }) => {
-  const { syncTaquito, collect, curate, claim_hDAO, acc } =
+  const { syncTaquito, collect, curate, acc } =
     useContext(HicetnuncContext)
-  const reducer = (accumulator, currentValue) =>
-    parseInt(accumulator) + parseInt(currentValue)
+
+  const [showSignStatus, setShowSignStatus] = useState(false)
 
   if (isDetailView) {
     // subtract burned pieces from total
@@ -44,7 +46,6 @@ export const ItemInfo = ({
     swaps = swaps.filter(e => parseInt(e.contract_version) === 2 && parseInt(e.status) === 0 && e.is_valid)
     console.log(swaps)
     let s = _.minBy(swaps, (o) => Number(o.price))
-    let maxPrice = _.maxBy(swaps, (o) => Number(o.price))
 
     var message = ''
 
@@ -65,56 +66,46 @@ export const ItemInfo = ({
       }
     }
 
-    const curateOrClaim = (id, balance = 0) => {
-      // if user is creator and there's hDAO balance
-      if (acc && acc.address === creator.address && balance > 0) {
-        claim_hDAO(balance, id)
-      } else {
-        curate(id)
-      }
-    }
+    // Check collab status
+    const isCollab = creator.is_split
+    const verifiedSymbol = isCollab && is_signed ? '✓ ' : '⚠️'
+    const verifiedStatus = isCollab && is_signed ? 'VERIFIED' : 'UNVERIFIED'
+    const isCoreParticipant = isCollab ? creator.shares[0].shareholder.find(h => h.holder_id === acc?.address) : false
 
-    const renderHDAObutton = (id, balance) => {
-      return (
-        <Button onClick={() => curate(id)}>
-          <Primary>
-            <span
-              className={styles.top}
-              data-position={'top'}
-              data-tooltip={'curate'}
-            >
-              〇
-            </span>
-          </Primary>
-        </Button>
-      )
-    }
+    // Show the signing UI if required
+    const userHasSigned = token_signatures.find(sig => sig.holder_id === acc?.address)
+    const coreParticipants = isCollab ? creator.shares[0].shareholder.filter(h => h.holder_type === CollaboratorType.CORE_PARTICIPANT) : null
 
-    // the issuer path depends on whether it's a collab address (KT) or individual (tz)
-    const { ISSUER, COLLAB } = PATH
-    const creatorAddress = creator.address
-    const isCollab = creatorAddress.substring(0, 2) === 'KT'
-    const issuerPath = isCollab ? COLLAB : ISSUER
+    const signStatusStyles = classNames(
+      collabStyles.flexBetween,
+      collabStyles.alignStart
+    )
 
     return (
       <>
         <div style={{ height: '30px' }}></div>
         <div className={styles.container}>
           <div className={styles.edition}>
-            <div className={styles.inline}>
-              {/* <p className={styles.issuer}>{isCollab ? 'Collaboration:' : 'Issuer:'}&nbsp;</p> */}
-                <Button
-                  to={
-                    `/tz/${creator.address}`
-                  }
-                >
-                  {creator.name ? (
-                    <Primary>{encodeURI(creator.name)}</Primary>
-                  ) : (
-                    <Primary>{walletPreview(creator.address)}</Primary>
-                  )}
-                </Button>
+
+            <div className={collabStyles.relative}>
+              <div className={styles.inline}>
+
+                {isCollab && (
+                  <CollabIssuerInfo creator={creator} />
+                )}
+
+                {!isCollab && (
+                  <Button to={`${PATH.ISSUER}/${creator.address}`}>
+                    {creator.name ? (
+                      <Primary>{encodeURI(creator.name)}</Primary>
+                    ) : (
+                      <Primary>{walletPreview(creator.address)}</Primary>
+                    )}
+                  </Button>
+                )}
+              </div>
             </div>
+
             {!feed && (
               <div>
                 <p>
@@ -128,6 +119,7 @@ export const ItemInfo = ({
               </div>
             )}
           </div>
+
           {feed && (
             <div className={styles.objktContainer}>
               <Button to={`${PATH.OBJKT}/${id}`} disabled={isDetailView}>
@@ -137,9 +129,43 @@ export const ItemInfo = ({
           )}
         </div>
 
+        {/* SHOW SIGNING UI IF COLLABORATOR */}
+        {isDetailView && isCollab && isCoreParticipant && !userHasSigned && (
+          <div className={styles.container} style={{ paddingTop: 0 }}>
+            <SigningUI id={id} hasSigned={false} />
+          </div>
+        )}
+
         {isDetailView && !restricted && (
           <div className={styles.spread}>
-            <p style={{ paddingBottom: '7.5px' }}>OBJKT#{id}</p>
+            <div>
+              <p style={{ paddingBottom: '7.5px' }}>OBJKT#{id}</p>
+              {isCollab && (
+                <div className={collabStyles.relative}>
+                  <span>{verifiedSymbol}</span>
+                  <Button onClick={() => setShowSignStatus(!showSignStatus)}>
+                    <Primary>
+                      <strong>{verifiedStatus}</strong>
+                    </Primary>
+                  </Button>
+                  {showSignStatus && (
+                    <div className={collabStyles.collabInfo}>
+                      <div className={signStatusStyles}>
+                        <SigningSummary
+                          coreParticipants={coreParticipants}
+                          signatures={token_signatures}
+                        />
+                        <Button onClick={() => setShowSignStatus(false)}>
+                          <Secondary>
+                            close
+                          </Secondary>
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
             <Button onClick={() => handleCollect()}>
               <Purchase>{message}</Purchase>
             </Button>

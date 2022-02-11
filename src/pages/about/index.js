@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Page, Container, Padding } from '../../components/layout'
 import { Button, Primary } from '../../components/button'
 import { HicetnuncContext } from '../../context/HicetnuncContext'
-import { BottomBanner } from '../../components/bottom-banner'
 import { getLanguage } from '../../constants'
 import styles from './styles.module.scss'
 
@@ -26,7 +25,7 @@ export class About extends Component {
       <Page title="about" large>
         <Container>
           <Padding>
-            <strong>hic et nunc</strong>
+            <strong>teia</strong>
           </Padding>
         </Container>
 
@@ -51,43 +50,19 @@ export class About extends Component {
         <Container>
           <Padding>
             <div className={styles.buttons}>
-              <p>Join or contact hic et nunc on</p>
+              <p>Join or contact teia on</p>
               &nbsp;
-              <Button href="https://hicetnunc2000.medium.com">
-                <Primary>
-                  <strong>medium</strong>
-                </Primary>
-              </Button>
-              <p>,</p>&nbsp;
-              <Button href="mailto:hicetnunc2000@protonmail.com">
-                <Primary>
-                  <strong>email</strong>
-                </Primary>
-              </Button>
-              <p>,</p>&nbsp;
-              <Button href="https://discord.gg/W8vQ7REym7">
+              <Button href="https://discord.gg/7pZrPCcgnG">
                 <Primary>
                   <strong>discord</strong>
                 </Primary>
               </Button>
               <p>,</p>&nbsp;
-              <Button href="https://reddit.com/r/hicetnunc">
+              <Button href="https://twitter.com/TeiaCommunity">
                 <Primary>
-                  <strong>reddit</strong>
+                  <strong>twitter</strong>
                 </Primary>
               </Button>
-              <p>,</p>&nbsp;
-              <Button href="https://t.me/hicetnunc2000">
-                <Primary>
-                  <strong>telegram</strong>
-                </Primary>
-              </Button>
-              &nbsp;or through our
-              <Button href="https://community.hicetnunc.xyz">
-                <Primary>
-                  <strong>&nbsp;community forum</strong>
-                </Primary>
-              </Button>.
             </div>
           </Padding>
         </Container>
@@ -134,7 +109,7 @@ export class About extends Component {
           </Padding>
         </Container>
 {/*         <BottomBanner>
-        Collecting has been temporarily disabled. Follow <a href="https://twitter.com/hicetnunc2000" target="_blank">@hicetnunc2000</a> or <a href="https://discord.gg/jKNy6PynPK" target="_blank">join the discord</a> for updates.
+        Collecting has been temporarily disabled. Follow <a href="https://twitter.com/TeiaCommunity" target="_blank">@hicetnunc_art</a> or <a href="https://discord.gg/7pZrPCcgnG" target="_blank">join the discord</a> for updates.
         </BottomBanner> */}
       </Page>
     )
