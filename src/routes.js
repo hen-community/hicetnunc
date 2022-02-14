@@ -11,6 +11,7 @@ import { GalleryDetail } from './pages/gallery-detail'
 import { Config } from './pages/config'
 import { Search } from './pages/search'
 import { Tags } from './pages/tags'
+import { Terms } from './pages/terms'
 import { Friends } from './pages/friends'
 
 export const routes = [
@@ -58,6 +59,11 @@ export const routes = [
     exact: false,
     path: '/about',
     component: About,
+  },
+  {
+    exact: false,
+    path: '/terms',
+    component: Terms,
   },
   {
     exact: false,
