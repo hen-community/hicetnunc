@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Primary, Purchase } from '../button'
+import { MARKETPLACE_CONTRACT_V1, MARKETPLACE_CONTRACT_V2, MARKETPLACE_CONTRACT_TEIA } from '../../constants'
 import { walletPreview } from '../../utils/string'
 import styles from './styles.module.scss'
 import { HicetnuncContext } from '../../context/HicetnuncContext'
@@ -8,22 +9,32 @@ const sortByPrice = (a, b) => {
   return Number(a.xtz_per_objkt) - Number(b.xtz_per_objkt)
 }
 
-export const OwnerSwaps = ({ swaps, handleCollect, cancel, proxyAdminAddress, restricted, ban, cancelv1, reswapv2 }) => {
+const TeiaLabel = () => (
+  <span className={styles.teiaLabel} title="buy this listing and support teia">
+    <span style={{ color: '#f79533' }}>T</span><span style={{ color: '#ef4e7b' }}>E</span><span style={{ color: '#5073b8' }}>I</span><span style={{ color: '#07b39b' }}>A</span>
+  </span>
+);
+
+export const OwnerSwaps = ({ swaps, handleCollect, cancel, proxyAdminAddress, restricted, ban, cancelv1, reswap }) => {
 
   console.log("SWAPS", proxyAdminAddress);
 
+
   const { acc, proxyAddress } = useContext(HicetnuncContext)
+  const [reswapPrices, setReswapPrices] = useState({});
 
-  let v2 = swaps.filter(e => parseInt(e.contract_version) === 2 && parseInt(e.status) === 0 && e.is_valid)
+  const v1Swaps = swaps.filter(e => e.contract_address === MARKETPLACE_CONTRACT_V1 && parseInt(e.status) === 0)
 
-  let v1 = swaps.filter(e => parseInt(e.contract_version) === 1 && parseInt(e.status) === 0)
+  const v2andTeiaSwaps = swaps
+    .filter(e => [MARKETPLACE_CONTRACT_V2, MARKETPLACE_CONTRACT_TEIA].includes(e.contract_address) && parseInt(e.status) === 0 && e.is_valid)
+    .sort(sortByPrice)
 
   return (
     <div className={styles.container}>
       {
-        v1.length > 0 && (
+        v1Swaps.length > 0 && (
           <div>
-            {v1.map((e, index) => {
+            {v1Swaps.map((e, index) => {
               if (acc) {
                 if (acc.address === e.creator_id) {
                   return (
@@ -31,7 +42,7 @@ export const OwnerSwaps = ({ swaps, handleCollect, cancel, proxyAdminAddress, re
                       <div key={`${e.id}-${index}`} className={styles.swap}>
                         <div className={styles.issuer}>
                           {e.amount_left} ed.&nbsp;
-                          <Button to={'/tz/KT1Hkg5qeNhfwpKW4fXvq7HGZB9z2EnmCCA9'}>
+                          <Button to={`/tz/${MARKETPLACE_CONTRACT_V1}`}>
                             <Primary>OBJKTSWAP V1</Primary>
                           </Button>
                         </div>
@@ -53,12 +64,13 @@ export const OwnerSwaps = ({ swaps, handleCollect, cancel, proxyAdminAddress, re
           </div>
         )
       }
-      {v2.sort(sortByPrice).map((swap, index) => {
+      {v2andTeiaSwaps.map((swap, index) => {
 
         const showCancel = (swap.creator.address === acc?.address) || (proxyAdminAddress === acc?.address && swap.creator.address === proxyAddress)
+        const key = `${swap.contract_address}-${swap.id}`;
 
         return (
-          <div key={`${swap.id}-${index}`} className={styles.swap}>
+          <div key={key} className={styles.swap}>
             <div className={styles.issuer}>
               {swap.amount_left} ed.&nbsp;
               {swap.creator.name ? (
@@ -75,21 +87,43 @@ export const OwnerSwaps = ({ swaps, handleCollect, cancel, proxyAdminAddress, re
             <div className={styles.buttons}>
               {!restricted && (
                 !ban.includes(swap.creator_id) && (
-                <Button onClick={() => handleCollect(swap.id, swap.price)}>
+                <>
+                  {swap.contract_address === MARKETPLACE_CONTRACT_TEIA ? (<TeiaLabel />) : null}
+                <Button onClick={() => handleCollect(swap.contract_address, swap.id, swap.price)}>
                   <Purchase>
                     collect for {parseFloat(swap.price / 1000000)} tez
                   </Purchase>
                 </Button>
+                </>
               ))}
               {showCancel && (
                   <>
                     <div className={styles.break}></div>
-                    <input id="new_price" type="text" size="12" placeholder="New price"></input>
-                    <Button onClick={() => reswapv2(swap)}>
+                    <input
+                      value={reswapPrices[key] || ''}
+                      onChange={(ev) => {
+                        const { value } = ev.target;
+                        setReswapPrices((prevVal) => ({ ...prevVal, [key]: value }));
+                      }}
+                      type="number"
+                      placeholder="New price"
+                    />
+                    <Button onClick={() => {
+                      const priceTz = reswapPrices[key]
+
+                      if (!priceTz || priceTz <= 0) {
+                        // TODO: communicate the error to the user.
+                        return
+                      }
+
+                      // TODO: add a indicator (spinner or something) that shows that the reswap is in progress
+                      reswap(priceTz * 1000000, swap)
+                      // TODO: after the reswap was successful we should send some feedback to the user
+                    }}>
                       <Purchase>reswap</Purchase>
                     </Button>
 
-                    <Button onClick={() => cancel(swap.id)}>
+                    <Button onClick={() => cancel(swap.contract_address, swap.id)}>
                       <Purchase>cancel</Purchase>
                     </Button>
                   </>
