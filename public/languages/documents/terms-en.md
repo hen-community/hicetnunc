@@ -106,7 +106,7 @@ Reasons for an account restriction:
 - Funding from a confirmed restricted account.
 - Funding of confirmed restricted accounts.
 - Wash trading: market manipulation through buying own OBJKTs directly or indirectly.
-- Minting material that glorifies human rights violations or is soley pornographic without any artistic expression. This applies especially but is not limited to cases of copied pornographic content that can be found on websites which can be clearly indentified as pornographic.
+- Minting material that glorifies human rights violations or is soley pornographic without any artistic expression. This applies especially but is not limited to cases of copied or filtered pornographic content that can be found on websites which can be clearly indentified as pornographic.
 - Violates the CoC in other ways: mainly if it is overtly abusive to another group, invokes violence, or intimidates or harasses.
 
 ### Procedure if your account has been restricted
