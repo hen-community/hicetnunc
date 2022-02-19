@@ -7,7 +7,6 @@ import { Loading } from '../../../components/loading'
 
 export const Burn = (props) => {
   console.log("BURN", props)
-  
   const { token_holders, id } = props
   const { burn, acc, proxyAddress, message, setMessage, setProgress, progress } = useContext(HicetnuncContext)
   const [amount, setAmount] = useState('')

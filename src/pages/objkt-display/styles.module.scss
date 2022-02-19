@@ -15,8 +15,19 @@
   }
 }
 
+.history__container {
+  margin: 0 1em;
+}
+
 .history {
+  // margin: 0 20px;
+  height: 95px;
+
+  font-size: $font-small-mobile;
+
   display: flex;
+  flex-direction: column;
+  align-content: space-between;
   flex-wrap: wrap;
 
   margin-top: 18px;
@@ -72,7 +83,7 @@
   font-size: $font-small-mobile;
   margin-bottom: 8px;
 
-  color: var(--gray-60);
+  color: var(--secondary-color);
 
   @include respond-to('desktop') {
     display: flex;

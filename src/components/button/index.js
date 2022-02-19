@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { HicetnuncContext } from '../../context/HicetnuncContext'
 import classnames from 'classnames'
 import styles from './styles.module.scss'
 
@@ -10,11 +11,13 @@ export const Button = ({
   children,
   disabled,
   fit,
+  full
 }) => {
   const classes = classnames({
     [styles.container]: true,
     [styles.disabled]: disabled,
     [styles.fit]: fit,
+    [styles.full]: full,
   })
 
   if (to) {
@@ -63,9 +66,12 @@ export const Secondary = ({ children = null, selected }) => {
 }
 
 export const Purchase = ({ children = null, selected }) => {
+  const context = useContext(HicetnuncContext)
+
   const classes = classnames({
     [styles.purchase]: true,
     [styles.selected]: selected,
+    [styles.dark]: context.theme === 'dark'
   })
   return <div className={classes}>{children}</div>
 }
