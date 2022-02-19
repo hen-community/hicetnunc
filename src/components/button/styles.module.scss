@@ -45,10 +45,14 @@
 }
 
 .purchase {
-  padding: 2px 6px;
-  color: var(--text-color);
-  border-right: 2px solid var(--text-color);
-  border-bottom: 2px solid var(--text-color);
+  width: 100%;
+
+  padding: 4px 6px;
+
+  color: var(--gray-100);
+  background-color: var(--gray-5);
+  border-right: 2px solid var(--gray-100);
+  border-bottom: 2px solid var(--gray-100);
   transition: border-color #{$theme-duration} ease-out,
     color #{$theme-duration} ease-out;
 }

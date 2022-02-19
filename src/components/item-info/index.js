@@ -126,55 +126,6 @@ export const ItemInfo = ({
               <Button to={`${PATH.OBJKT}/${id}`} disabled={isDetailView}>
                 <Primary>OBJKT#{id}</Primary>
               </Button>
-            </div>
-          )}
-        </div>
-
-        {/* SHOW SIGNING UI IF COLLABORATOR */}
-        {isDetailView && isCollab && isCoreParticipant && !userHasSigned && (
-          <div className={styles.container} style={{ paddingTop: 0 }}>
-            <SigningUI id={id} hasSigned={false} />
-          </div>
-        )}
-
-        {isDetailView && !restricted && (
-          <div className={styles.spread}>
-            <div>
-              <p style={{ paddingBottom: '7.5px' }}>OBJKT#{id}</p>
-              {isCollab && (
-                <div className={collabStyles.relative}>
-                  <span>{verifiedSymbol}</span>
-                  <Button onClick={() => setShowSignStatus(!showSignStatus)}>
-                    <Primary>
-                      <strong>{verifiedStatus}</strong>
-                    </Primary>
-                  </Button>
-                  {showSignStatus && (
-                    <div className={collabStyles.collabInfo}>
-                      <div className={signStatusStyles}>
-                        <SigningSummary
-                          coreParticipants={coreParticipants}
-                          signatures={token_signatures}
-                        />
-                        <Button onClick={() => setShowSignStatus(false)}>
-                          <Secondary>
-                            close
-                          </Secondary>
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-            <Button onClick={() => handleCollect()}>
-              <Purchase>{message}</Purchase>
-            </Button>
-          </div>
-        )}
-        <div className={styles.spread}>
-          <Button onClick={() => curate(id)}>
-            <Primary>
               <span
                 className={styles.top}
                 data-position={'top'}
@@ -182,9 +133,25 @@ export const ItemInfo = ({
               >
                 〇
               </span>
+            </div>
+          )}
+        </div>
+
+        {isDetailView && !restricted && (
+          <div className={styles.spread}>
+            <p style={{ paddingBottom: '7.5px' }}>OBJKT#{id}</p>
+            <Button onClick={() => handleCollect()} full>
+              <Purchase>{message}</Purchase>
+            </Button>
+          </div>
+        )}
+        {/* <div className={styles.spread}>
+          <Button onClick={() => curate(id)}>
+            <Primary>
+
             </Primary>
           </Button>
-        </div>
+        </div> */}
       </>
     )
   } else {
