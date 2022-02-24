@@ -51,8 +51,8 @@
     "web-encoding": "1.1.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "export REACT_APP_BUILD_COMMIT=$(git rev-parse HEAD) && react-scripts start",
+    "build": "export REACT_APP_BUILD_COMMIT=$(git rev-parse HEAD) && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "eb:prod": "npm run build && npm run start:prod",
