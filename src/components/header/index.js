@@ -121,11 +121,11 @@ export const Header = () => {
                         <Primary><a style={style} href='/galleries'>galleries</a></Primary>
                       </Button>
                     </li>
-{/*                     <li>
+                    <li>
                       <Button onClick={() => handleRoute('/collaborate')}>
                         <Primary>collaborate</Primary>
                       </Button>
-                    </li> */}
+                    </li>
                     <li>
                       <Button onClick={() => handleRoute('/about')}>
                         <Primary>about</Primary>
@@ -152,6 +152,11 @@ export const Header = () => {
                       <li style={{ textAlign: 'left' }}>
                         <Button onClick={() => handleRoute('/sync')}>
                           <Primary left>manage assets</Primary>
+                        </Button>
+                      </li>
+                      <li style={{ textAlign: 'left' }}>
+                        <Button onClick={() => handleRoute('/sync', 'friends')}>
+                          <Primary>friends</Primary>
                         </Button>
                       </li>
                       <li style={{ textAlign: 'left' }}>
