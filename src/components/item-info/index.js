@@ -127,13 +127,6 @@ export const ItemInfo = ({
             </Button>
           </div>
         )}
-        {/* <div className={styles.spread}>
-          <Button onClick={() => curate(id)}>
-            <Primary>
-
-            </Primary>
-          </Button>
-        </div> */}
       </>
     )
   } else {

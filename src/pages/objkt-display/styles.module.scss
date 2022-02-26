@@ -129,28 +129,28 @@
 
 .history__event {
   @include respond-to('desktop') {
-  width: calc(9.166666666%);
+    width: calc(9.166666666%);
   }
 }
 
 .history__from, .history__to {
   @include respond-to('desktop') {
-  text-overflow: ellipsis;
-  width: calc(20.833333333%);
+    text-overflow: ellipsis;
+    width: calc(20.833333333%);
   }
 }
 
 .history__ed {
   @include respond-to('desktop') {
-  text-align: center;
-  width: calc(6.944444444%);
+    text-align: center;
+    width: calc(6.944444444%);
   }
 }
 
 .history__price, .history__date {
   @include respond-to('desktop') {
-  text-align: right;
-  width: calc(13.888888888%);
+    text-align: right;
+    width: calc(13.888888888%);
   }
 }
 
@@ -158,12 +158,12 @@
   font-size: $font-small-mobile;
 
   @include respond-to('desktop') {
-  font-size: $font-small;
-  margin-top: 20px;
-  padding-top: 10px;
+    font-size: $font-small;
+    margin-top: 20px;
+    padding-top: 10px;
 
-  width: 33.333333333%;
-  border-top: 1px solid var(--border-color);
+    width: 33.333333333%;
+    border-top: 1px solid var(--border-color);
   }
 }
 
