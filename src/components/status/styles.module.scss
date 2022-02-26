@@ -1,0 +1,25 @@
+@import '../../styles/variables.scss';
+
+.status {
+  padding-left: 0.5em;
+  cursor: default;
+  text-decoration: none;
+}
+
+span[data-tooltip].status {
+  &:before,
+  &:after {
+    transform: translate(-50%, -10px);
+  }
+
+  &:hover:after,
+  &:hover:before {
+    transform: translate(-50%, 0px);
+  }
+}
+
+span[data-tooltip][data-position='bottom']:before {
+  top: 100%;
+  left: 50%;
+  margin-top: 9px;
+}
