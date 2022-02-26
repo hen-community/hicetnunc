@@ -154,3 +154,20 @@ span[data-tooltip][data-position='top']:after {
   bottom: 101%;
   margin-bottom: 4px;
 }
+
+.objkt__label {
+  padding-bottom: 7.5px;
+
+  @include respond-to('desktop') {
+    padding-bottom: 0;
+    height: fit-content;
+  }
+}
+
+.objkt__label__container {
+  align-items: flex-start;
+
+  @include respond-to('dekstop') {
+    align-items: center;
+  }
+}

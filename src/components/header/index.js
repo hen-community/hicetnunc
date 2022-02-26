@@ -25,7 +25,7 @@ const wallet = new BeaconWallet({
 export const Header = () => {
   const history = useHistory()
   const context = useContext(HicetnuncContext)
-
+  const style = {fontSize : '20px'}
   useEffect(() => {
     context.setAccount()
     context.setTheme(getItem('theme') || setItem('theme', 'dark'))
@@ -118,7 +118,7 @@ export const Header = () => {
                     </li>
                     <li>
                       <Button>
-                        <Primary><a style={{ fontSize: '20px' }} href='/galleries'>galleries</a></Primary>
+                        <Primary><a style={style} href='/galleries'>galleries</a></Primary>
                       </Button>
                     </li>
                     <li>

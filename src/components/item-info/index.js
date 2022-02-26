@@ -120,8 +120,8 @@ export const ItemInfo = ({
         </div>
 
         {isDetailView && !restricted && (
-          <div className={styles.spread}>
-            <p style={{ paddingBottom: '7.5px' }}>OBJKT#{id}</p>
+          <div className={`${styles.spread} ${styles.objkt__label__container}`}>
+            <p className={styles.objkt__label}>OBJKT#{id}</p>
             <Button onClick={() => handleCollect()} full>
               <Purchase>{message}</Purchase>
             </Button>
