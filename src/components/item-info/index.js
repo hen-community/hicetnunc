@@ -1,15 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { PATH, SUPPORTED_MARKETPLACE_CONTRACTS } from '../../constants'
-import { Button, Primary, Purchase, Secondary } from '../button'
+import { Button, Primary, Purchase } from '../button'
 import { HicetnuncContext } from '../../context/HicetnuncContext'
 import { walletPreview } from '../../utils/string'
 import styles from './styles.module.scss'
 import collabStyles from '../collab/styles.module.scss'
-import { SigningUI } from '../collab/sign/SigningUI'
-import { SigningSummary } from '../collab/show/SigningSummary'
 import { CollabIssuerInfo } from '../collab/show/CollabIssuerInfo'
-import { CollaboratorType } from '../collab/constants'
-import classNames from 'classnames'
 
 const _ = require('lodash')
 
@@ -35,8 +31,6 @@ export const ItemInfo = ({
 }) => {
   const { syncTaquito, collect, curate, acc } =
     useContext(HicetnuncContext)
-
-  const [showSignStatus, setShowSignStatus] = useState(false)
 
   if (isDetailView) {
     // TODO: subtract burned pieces from total
@@ -69,18 +63,6 @@ export const ItemInfo = ({
 
     // Check collab status
     const isCollab = creator.is_split
-    const verifiedSymbol = isCollab && is_signed ? '✓ ' : '⚠️'
-    const verifiedStatus = isCollab && is_signed ? 'VERIFIED' : 'UNVERIFIED'
-    const isCoreParticipant = isCollab ? creator.shares[0].shareholder.find(h => h.holder_id === acc?.address) : false
-
-    // Show the signing UI if required
-    const userHasSigned = token_signatures.find(sig => sig.holder_id === acc?.address)
-    const coreParticipants = isCollab ? creator.shares[0].shareholder.filter(h => h.holder_type === CollaboratorType.CORE_PARTICIPANT) : null
-
-    const signStatusStyles = classNames(
-      collabStyles.flexBetween,
-      collabStyles.alignStart
-    )
 
     return (
       <>

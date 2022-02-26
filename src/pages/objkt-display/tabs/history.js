@@ -3,7 +3,6 @@ import { Container, Padding } from '../../../components/layout'
 import { Primary } from '../../../components/button'
 import { walletPreview } from '../../../utils/string'
 import styles from '../styles.module.scss'
-import { parse } from '@babel/core'
 
 
 export const History = (token_info) => {
@@ -80,15 +79,15 @@ export const History = (token_info) => {
                                                     <path d="M10.2153 10.0547H14.0725V6.04987" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                                 </svg>
 
-                                                <a href={`https://tzkt.io/${e.ophash}`} target="_blank">trade</a>
+                                                <a href={`https://tzkt.io/${e.ophash}`} target="_blank" rel="noreferrer">trade</a>
                                             </div>
 
                                             <div className={styles.history__from}>
-                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>from</div>{e.seller.name ? <span><a href={`/tz/${encodeURI(e.seller.address)}`} target="_blank"><Primary>{encodeURI(e.seller.name)}</Primary></a></span> : <span><a href={`/tz/${e.seller.address}`}><Primary>{walletPreview(e.seller.address)}</Primary></a></span>}
+                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>from</div>{e.seller.name ? <span><a href={`/tz/${encodeURI(e.seller.address)}`} target="_blank" rel="noreferrer"><Primary>{encodeURI(e.seller.name)}</Primary></a></span> : <span><a href={`/tz/${e.seller.address}`}><Primary>{walletPreview(e.seller.address)}</Primary></a></span>}
                                             </div>
 
                                             <div className={styles.history__to}>
-                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>to</div>{e.buyer.name ? <span><a href={`/${encodeURI(e.buyer.name)}`} target="_blank"><Primary>{encodeURI(e.buyer.name)}</Primary></a></span> : <span><a href={`/tz/${e.buyer.address}`}><Primary>{walletPreview(e.buyer.address)}</Primary></a></span>}
+                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>to</div>{e.buyer.name ? <span><a href={`/${encodeURI(e.buyer.name)}`} target="_blank" rel="noreferrer"><Primary>{encodeURI(e.buyer.name)}</Primary></a></span> : <span><a href={`/tz/${e.buyer.address}`}><Primary>{walletPreview(e.buyer.address)}</Primary></a></span>}
                                             </div>
 
                                             <div className={`${styles.history__ed} ${styles.history__desktop}`}>
@@ -127,11 +126,11 @@ export const History = (token_info) => {
                                                 </svg>
 
 
-                                                <a href={`https://tzkt.io/${e.ophash}`} target="_blank">swap</a>
+                                                <a href={`https://tzkt.io/${e.ophash}`} target="_blank" rel="noreferrer">swap</a>
                                             </div>
 
                                             <div className={styles.history__from}>
-                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>from</div>{e.creator.name ? <span><a href={`/tz/${encodeURI(e.creator.address)}`} target="_blank"><Primary>{encodeURI(e.creator.name)}</Primary></a></span> : <span><a href={`/tz/${e.creator.address}`}><Primary>{walletPreview(e.creator.address)}</Primary></a></span>}
+                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>from</div>{e.creator.name ? <span><a href={`/tz/${encodeURI(e.creator.address)}`} target="_blank" rel="noreferrer"><Primary>{encodeURI(e.creator.name)}</Primary></a></span> : <span><a href={`/tz/${e.creator.address}`}><Primary>{walletPreview(e.creator.address)}</Primary></a></span>}
                                             </div>
 
                                             <div className={styles.history__to} />
@@ -180,7 +179,7 @@ export const History = (token_info) => {
 
 
                             <div className={styles.history__from}>
-                                {token_info.creator.name ? <span><a href={`/tz/${encodeURI(token_info.creator.address)}`} target="_blank"><Primary>{encodeURI(token_info.creator.name)}</Primary></a></span> : <span><a href={`/tz/${token_info.creator.address}`}><Primary>{walletPreview(token_info.creator.address)}</Primary></a></span>}
+                                {token_info.creator.name ? <span><a href={`/tz/${encodeURI(token_info.creator.address)}`} target="_blank" rel="noreferrer"><Primary>{encodeURI(token_info.creator.name)}</Primary></a></span> : <span><a href={`/tz/${token_info.creator.address}`}><Primary>{walletPreview(token_info.creator.address)}</Primary></a></span>}
                             </div>
 
                             <div className={styles.history__to} />
