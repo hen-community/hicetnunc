@@ -1,50 +1,42 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import styles from './styles.module.scss'
 import { useState } from 'react'
 import { VisuallyHidden } from '../visually-hidden'
-import { fetchGraphQL, getDipdupState } from "../../data/hicdex";
+import { fetchGraphQL, getDipdupState } from '../../data/hicdex'
 
-export const Status = () => {
-  const [status, setStatus] = useState({});
-  const [statusDetails, setStatusDetails] = useState({});
+export const Status = ({ criticalDelta = 50 }) => {
+  const [statusDetails, setStatusDetails] = useState()
 
-  const checkIndexerStatus = async () => {
-    try {
-      const tzktResult = await fetch('https://api.tzkt.io/v1/head')
-      if (tzktResult) {
-        const tzktStatus = await tzktResult.json()
-        if (tzktStatus) {
-          const level1 = tzktStatus.level
-          const dipdupState = await fetchGraphQL(getDipdupState)
+  const checkIndexerStatus = useCallback(async () => {
+    const tzktStatus = await fetch('https://api.tzkt.io/v1/head').then((res) => res && res.json())
 
-          const result = dipdupState.data.hic_et_nunc_dipdup_state
-          for (let index = 0; index < result.length; index++) {
-              const node = result[index]
-              if (node.index_name === "hen_mainnet"){
-                let level2 = node.level
-                if (level1 - level2 > 50){ // arbitrary blockchain level comparison
-                  console.log(`Indexer problem: ${level1} vs ${level2} = ${level1 - level2}`)
-                  setStatusDetails(`Indexer problem: The indexer is currently delayed (-${level1 - level2} blocks)`)
-                  return false;
-                }
-                break
-              }
-            }
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      return false;
+    if (!tzktStatus) {
+      return
     }
-    setStatusDetails("Indexer OK")
-    return true;
-  }
+
+    const dipdupState = await fetchGraphQL(getDipdupState)
+    const mainnetNode = dipdupState.data.hic_et_nunc_dipdup_state.find(({ index_name }) => index_name === 'hen_mainnet')
+
+    if (!mainnetNode) {
+      return
+    }
+
+    const delta = Math.abs(tzktStatus.level - mainnetNode.level)
+
+    if (delta > criticalDelta) { // arbitrary blockchain level comparison
+      console.log(`Indexer problem: ${tzktStatus.level} vs ${mainnetNode.level} = ${delta}`)
+      setStatusDetails(`Indexer problem: The indexer is currently delayed (-${delta} blocks)`)
+    }
+  }, [criticalDelta]);
 
   useEffect(() => {
-    checkIndexerStatus().then(d => setStatus(d));
-  }, [])
+    checkIndexerStatus()
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [checkIndexerStatus])
 
-  if (status){
+  if (!statusDetails) {
     return null
   }
 
@@ -58,7 +50,7 @@ export const Status = () => {
         }}
       >
         <VisuallyHidden>{`${statusDetails}`}</VisuallyHidden>
-        {status ? "🟢" : "🔴"}
+        🔴
       </span>
   )
 }
