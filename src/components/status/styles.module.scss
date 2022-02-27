@@ -7,14 +7,22 @@
 }
 
 span[data-tooltip].status {
+
+
   &:before,
   &:after {
-    transform: translate(-50%, -10px);
+    transform: translate(-80%, -10px);
   }
 
   &:hover:after,
   &:hover:before {
-    transform: translate(-50%, 0px);
+    transform: translate(-80%, 0px);
+
+    @media (max-width: 768px) {
+      white-space: pre-wrap;
+      width: 70vw;
+      }
+
   }
 }
 
