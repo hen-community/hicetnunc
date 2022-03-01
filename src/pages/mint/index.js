@@ -40,8 +40,8 @@ const thumbnailOptions = {
   maxHeight: 350,
 }
 
-const uriQuery = `query uriQuery($ids: [String!] = "") {
-  hic_et_nunc_token(order_by: {id: desc}, where: {artifact_uri: {_in: $ids}}) {
+const uriQuery = `query uriQuery($address: String!, $ids: [String!] = "") {
+  hic_et_nunc_token(order_by: {id: desc}, where: {artifact_uri: {_in: $ids}, creator_id: {_eq: $address}}) {
     id
     creator {
       address
@@ -237,7 +237,7 @@ export const Mint = () => {
 
     const uri0 = `ipfs://${hashv0}`
     const uri1 = `ipfs://${hashv1}`
-    const { errors, data } = await fetchGraphQL(uriQuery, 'uriQuery',  {"ids":[uri0, uri1]})
+    const { errors, data } = await fetchGraphQL(uriQuery, 'uriQuery',  {"address": proxyAddress || acc.address,"ids":[uri0, uri1]})
 
     if (errors) {
       console.error(errors)
