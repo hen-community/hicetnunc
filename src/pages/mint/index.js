@@ -1,32 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react'
+import classNames from 'classnames'
 import Compressor from 'compressorjs'
 import ipfsHash from 'ipfs-only-hash'
 import _ from 'lodash'
-import { HicetnuncContext } from '../../context/HicetnuncContext'
-import { Page, Container, Padding } from '../../components/layout'
-import { Input, Textarea } from '../../components/input'
-import { Button, Curate, Primary, Purchase } from '../../components/button'
-import { Upload } from '../../components/upload'
-import { Preview } from '../../components/preview'
-import { prepareFile, prepareDirectory } from '../../data/ipfs'
-import { prepareFilesFromZIP } from '../../utils/html'
-import {
-  ALLOWED_MIMETYPES,
-  ALLOWED_FILETYPES_LABEL,
-  ALLOWED_COVER_MIMETYPES,
-  ALLOWED_COVER_FILETYPES_LABEL,
-  MINT_FILESIZE,
-  MIMETYPE,
-  MAX_EDITIONS,
-  MIN_ROYALTIES,
-  MAX_ROYALTIES,
-  BURN_ADDRESS
-} from '../../constants'
-import { fetchGraphQL, getCollabsForAddress, getNameForAddress } from '../../data/hicdex'
-import collabStyles from '../../components/collab/styles.module.scss'
-import classNames from 'classnames'
-import { CollabContractsOverview } from '../collaborate/tabs/manage'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Button, Curate, Primary, Purchase } from '../../components/button'
+import collabStyles from '../../components/collab/styles.module.scss'
+import { Input, Textarea } from '../../components/input'
+import { Container, Padding, Page } from '../../components/layout'
+import { Preview } from '../../components/preview'
+import { Upload } from '../../components/upload'
+import {
+  ALLOWED_COVER_FILETYPES_LABEL, ALLOWED_COVER_MIMETYPES, ALLOWED_FILETYPES_LABEL, ALLOWED_MIMETYPES, BURN_ADDRESS, MAX_EDITIONS, MAX_ROYALTIES, MIMETYPE, MINT_FILESIZE, MIN_ROYALTIES
+} from '../../constants'
+import { HicetnuncContext } from '../../context/HicetnuncContext'
+import { fetchGraphQL, getCollabsForAddress, getNameForAddress } from '../../data/hicdex'
+import { prepareDirectory, prepareFile } from '../../data/ipfs'
+import { prepareFilesFromZIP } from '../../utils/html'
+import { CollabContractsOverview } from '../collaborate/tabs/manage'
 
 const coverOptions = {
   quality: 0.85,
@@ -369,6 +360,40 @@ export const Mint = () => {
     return true
   }
 
+  const handleLocalCache = () => {
+    const title = window.localStorage.getItem('objkt::title')
+    const description = window.localStorage.getItem('objkt::description')
+    const tags = window.localStorage.getItem('objkt::tags')
+    const edition_count = window.localStorage.getItem('objkt::edition_count')
+    const royalties = window.localStorage.getItem('objkt::royalties')
+
+    setTitle(title)
+    setDescription(description)
+    setTags(tags)
+    setAmount(edition_count)
+    setRoyalties(royalties)
+
+    console.log(`
+    Restoring fields from localStorage:
+      title = ${title}
+      description = ${description}
+      tags = ${tags}
+      edition_count = ${edition_count}
+      royalties = ${royalties}
+
+    `);
+  }
+
+  const hasLocalCache = () => {
+    const title = window.localStorage.getItem('objkt::title')
+    const description = window.localStorage.getItem('objkt::description')
+    const tags = window.localStorage.getItem('objkt::tags')
+    const edition_count = window.localStorage.getItem('objkt::edition_count')
+    const royalties = window.localStorage.getItem('objkt::royalties')
+
+    return title != null || description != null || tags != null || edition_count != null || royalties != null
+  }
+
   // const proxyDisplay = proxyName || proxyAddress
   // const mintingAs = proxyDisplay || (acc?.name || acc?.address)
   const flexBetween = classNames(collabStyles.flex, collabStyles.flexBetween)
@@ -400,26 +425,38 @@ export const Mint = () => {
             <Padding>
               <Input
                 type="text"
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Title"
-                label="Title"
+                onChange={(e) => {
+                  setTitle(e.target.value)
+                  window.localStorage.setItem('objkt::title', e.target.value)
+                  }
+                }
+                placeholder="title"
+                label="title"
                 value={title}
               />
 
               <Textarea
                 type="text"
                 style={{ whiteSpace: 'pre' }}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Description (max 5000 characters)"
-                label="Description"
+                onChange={(e) => {
+                  setDescription(e.target.value)
+                  window.localStorage.setItem('objkt::description', e.target.value)
+                  }
+                }
+                placeholder="description (max 5000 characters)"
+                label="description"
                 value={description}
               />
 
               <Input
                 type="text"
-                onChange={(e) => setTags(e.target.value)}
-                placeholder="Tags (comma separated. example: illustration, digital)"
-                label="Tags"
+                onChange={(e) => {
+                  setTags(e.target.value)
+                  window.localStorage.setItem('objkt::tags', e.target.value)
+                  }
+                }
+                placeholder="tags (comma separated. example: illustration, digital)"
+                label="tags"
                 value={tags}
               />
 
@@ -427,7 +464,11 @@ export const Mint = () => {
                 type="number"
                 min={1}
                 max={MAX_EDITIONS}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => {
+                  setAmount(e.target.value)
+                  window.localStorage.setItem('objkt::edition_count', e.target.value)
+                  }
+                }
                 onBlur={(e) => {
                   limitNumericField(e.target, 1, MAX_EDITIONS)
                   setAmount(e.target.value)
@@ -441,7 +482,11 @@ export const Mint = () => {
                 type="number"
                 min={MIN_ROYALTIES}
                 max={MAX_ROYALTIES}
-                onChange={(e) => setRoyalties(e.target.value)}
+                onChange={(e) => {
+                  setRoyalties(e.target.value)
+                  window.localStorage.setItem('objkt::royalties', e.target.value)
+                  }
+                }
                 onBlur={(e) => {
                   limitNumericField(e.target, MIN_ROYALTIES, MAX_ROYALTIES)
                   setRoyalties(e.target.value)
@@ -474,6 +519,16 @@ export const Mint = () => {
                 />
               </Padding>
             </Container>
+          )}
+          {hasLocalCache() && (
+          <Container>
+            <Padding>
+              {/*disabled={!hasCache()} */}
+              <Button onClick={handleLocalCache} fit  >
+                <Curate>Restore</Curate>
+              </Button>
+            </Padding>
+          </Container>
           )}
 
           <Container>
