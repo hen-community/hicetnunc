@@ -240,8 +240,16 @@ export const Mint = () => {
     const { errors, data } = await fetchGraphQL(uriQuery, 'uriQuery',  {"address": proxyAddress || acc.address,"ids":[uri0, uri1]})
 
     if (errors) {
-      console.error(errors)
-      return true // assume it's a double mint.
+      setFeedback({
+        visible: true,
+        message: `GraphQL Error: ${JSON.stringify(errors)}`,
+        progress: false,
+        confirm: true,
+        confirmCallback: () => {
+          setFeedback({ visible: false })
+        },
+      })
+      return true
     } else if (data) {
       const areAllTokensBurned = (data.hic_et_nunc_token || []).every((token) => _.get(token, 'token_holders.0.holder.address') === BURN_ADDRESS);
 
