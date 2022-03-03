@@ -161,3 +161,11 @@
     width: 250px;    
   }
 }
+
+.link {
+  font-size: 20px;
+
+  @include respond-to('desktop') {
+    font-size: 30px;
+  }
+}
