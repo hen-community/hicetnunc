@@ -220,7 +220,7 @@ export const ObjktDisplay = () => {
             <p>{error}</p>
           </Padding>
           <Padding>
-            <Button href="https://github.com/hicetnunc2000/hicetnunc/issues">
+            <Button href="https://github.com/teia-community/teia-ui/issues">
               <Primary>
                 <strong>Report</strong>
               </Primary>
