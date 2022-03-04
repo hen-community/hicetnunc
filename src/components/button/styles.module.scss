@@ -25,6 +25,7 @@
 }
 
 .primary {
+  font-family: 'ioveska-extended', 'IBM Plex Mono', 'Courier New', monospace;
   color: var(--text-color);
   transition: color #{$theme-duration} ease-out;
 
