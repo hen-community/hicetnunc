@@ -89,10 +89,11 @@ token_tags {
 }
 trades(order_by: {timestamp: asc}) {
   amount
+  ophash
   swap {
     price
   }
-  
+
   seller {
     address
     name
@@ -179,7 +180,7 @@ export const ObjktDisplay = () => {
         } else {
           await context.setAccount()
           setNFT(objkt)
-  
+
           setLoading(false)
         }
       })
