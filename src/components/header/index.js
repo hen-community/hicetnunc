@@ -146,7 +146,7 @@ export const Header = () => {
                         </Button>
                       </li>
                       <li style={{ textAlign: 'left' }}>
-                        <Button onClick={() => handleRoute('/sync')}>
+                        <Button onClick={() => handleRoute('/sync', 'tz')}>
                           <Primary left>manage assets</Primary>
                         </Button>
                       </li>
