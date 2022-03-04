@@ -47,10 +47,10 @@ export const ItemInfo = ({
     try {
       message =
         swaps[0] !== undefined
-          ? 'collect for ' + Number(s.price) / 1000000 + ' tez'
-          : 'not for sale'
+          ? 'Collect for ' + Number(s.price) / 1000000 + ' tez'
+          : 'Not for sale'
     } catch (e) {
-      message = 'not for sale'
+      message = 'Not for sale'
     }
 
     const handleCollect = () => {

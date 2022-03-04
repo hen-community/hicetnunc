@@ -47,15 +47,15 @@ export const Info = (token_info) => {
         <div style={{ margin: '0 1em' }}>
           <hr style={{ color: 'var(--gray-20)', marginBottom: '1em' }}/>
           <div style={{ marginBottom: '0.5em' }}>
-            <Padding>mimetype: {mime}</Padding>
+            <Padding>Mimetype: {mime}</Padding>
           </div>
           <Padding className="tag">
             <div style={{ fontWeight: 'bold' }}>
               <a style={tag} href={metadata.replace('ipfs://', IPFS)}>
-                metadata
+                Metadata
               </a>&nbsp;//&nbsp;
               <a style={tag} href={artifact_uri.replace('ipfs://', IPFS)}>
-                  view on ipfs
+                  View on ipfs
               </a>
             </div>
           </Padding>

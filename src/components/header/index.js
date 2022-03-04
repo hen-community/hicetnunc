@@ -30,7 +30,7 @@ export const Header = () => {
   }, [])
 
   // we assume user isn't connected
-  let button = 'sync'
+  let button = 'Sync'
 
   // but if they are
   if (context.acc?.address) {
@@ -40,7 +40,7 @@ export const Header = () => {
       button = walletPreview(context.acc.address) + proxyAddress
     } else {
       // menu is open
-      button = 'unsync'
+      button = 'Unsync'
     }
   }
 
@@ -81,7 +81,7 @@ export const Header = () => {
             {!context.collapsed && context.proxyAddress && (
               <div className={styles.mr}>
                 <Button onClick={() => context.setProxyAddress(null)} secondary>
-                  <Primary>exit collab</Primary>
+                  <Primary>Exit collab</Primary>
                 </Button>
               </div>
             )}
@@ -109,27 +109,27 @@ export const Header = () => {
                   <ul style={{ borderRight: '1px solid var(--border-color)' }}>
                     <li>
                       <Button onClick={() => handleRoute('/explore')}>
-                        <Primary>search</Primary>
+                        <Primary>Search</Primary>
                       </Button>
                     </li>
                     <li>
                       <Button>
-                        <Primary><a className={styles.link} href='/galleries'>galleries</a></Primary>
+                        <Primary><a className={styles.link} href='/galleries'>Galleries</a></Primary>
                       </Button>
                     </li>
                     <li>
                       <Button onClick={() => handleRoute('/collaborate')}>
-                        <Primary>collaborate</Primary>
+                        <Primary>Collaborate</Primary>
                       </Button>
                     </li>
                     <li>
                       <Button onClick={() => handleRoute('/about')}>
-                        <Primary>about</Primary>
+                        <Primary>About</Primary>
                       </Button>
                     </li>
                     <li>
                       <Button className={styles.link} onClick={() => handleRoute('/faq')}>
-                        <Primary>faq</Primary>
+                        <Primary>F.A.Q</Primary>
                       </Button>
                     </li>
                   </ul>
@@ -141,23 +141,23 @@ export const Header = () => {
                       <li style={{ textAlign: 'left' }}>
                         <Button onClick={() => handleRoute('/mint')}>
                           <Primary left>
-                            mint OBJKT
+                            Mint OBJKT
                           </Primary>
                         </Button>
                       </li>
                       <li style={{ textAlign: 'left' }}>
                         <Button onClick={() => handleRoute('/sync', 'tz')}>
-                          <Primary left>manage assets</Primary>
+                          <Primary left>Manage assets</Primary>
                         </Button>
                       </li>
                       <li style={{ textAlign: 'left' }}>
                         <Button onClick={() => handleRoute('/sync', 'friends')}>
-                          <Primary>friends</Primary>
+                          <Primary>Friends</Primary>
                         </Button>
                       </li>
                       <li style={{ textAlign: 'left' }}>
                         <Button onClick={() => handleRoute('/config')}>
-                          <Primary left>profile</Primary>
+                          <Primary left>Profile</Primary>
                         </Button>
                       </li>
                     </ul>

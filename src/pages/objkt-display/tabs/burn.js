@@ -41,7 +41,7 @@ export const Burn = (props) => {
     )
     if (r) {
       setProgress(true)
-      setMessage('burning OBJKT')
+      setMessage('Burning OBJKT')
       burn(id, amount)
     }
   }
@@ -90,7 +90,7 @@ export const Burn = (props) => {
           <Container>
             <Padding>
               <Button onClick={handleSubmit} fit>
-                <Purchase>burn</Purchase>
+                <Purchase>Burn</Purchase>
               </Button>
             </Padding>
           </Container>

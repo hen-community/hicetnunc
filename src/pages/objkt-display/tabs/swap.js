@@ -89,7 +89,7 @@ export const Swap = ({ total_amount, owners, creator, royalties, token_info, add
                     <Input
                       style={style}
                       type="number"
-                      placeholder="price per OBJKT"
+                      placeholder="Price per OBJKT"
                       min={0}
                       max={10000}
                       onChange={(e) => checkPrice(e.target.value)}
@@ -104,7 +104,7 @@ export const Swap = ({ total_amount, owners, creator, royalties, token_info, add
                   </div>
                 </div>
                 <Button onClick={handleSubmit} fit disabled={progress}>
-                  <Purchase>swap</Purchase>
+                  <Purchase>Swap</Purchase>
                 </Button>
               </Padding>
             </Container>

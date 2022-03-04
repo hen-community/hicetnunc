@@ -105,7 +105,7 @@ export const CollaboratorTable = ({ collaborators, setCollaborators, availableSh
                     <tfoot>
                         <tr>
                             <td colSpan={minimalView ? 2 : 3}>
-                                <button className={styles.btn} onClick={() => addCollaborator()} disabled={disableAddButton}>add another collaborator</button>
+                                <button className={styles.btn} onClick={() => addCollaborator()} disabled={disableAddButton}>Add another collaborator</button>
                             </td>
                         </tr>
                     </tfoot>

@@ -616,8 +616,8 @@ export class Search extends Component {
                   type="text"
                   name="search"
                   onChange={this.handleChange}
-                  label="search ↵"
-                  placeholder="search ↵"
+                  label="Search ↵"
+                  placeholder="Search ↵"
                   onKeyPress={this.handleKey}
                 />
             {

@@ -17,12 +17,12 @@ import { Transfer } from '../../components/collab/show/Transfer'
 const axios = require('axios')
 
 const TABS = [
-  { title: 'info', component: Info }, // public tab
-  { title: 'listings', component: Collectors }, // public tab
-  { title: 'history', component: History },
-  { title: 'swap', component: Swap, private: true, restricted: true }, // private tab (users only see if they are the creators or own a copy)
-  { title: 'burn', component: Burn, private: true }, // private tab (users only see if they are the creators or own a copy)
-  { title: 'transfer', component: Transfer, private: true }, // private tab (users only see if they are the creators or own a copy)
+  { title: 'Info', component: Info }, // public tab
+  { title: 'Listings', component: Collectors }, // public tab
+  { title: 'History', component: History },
+  { title: 'Swap', component: Swap, private: true, restricted: true }, // private tab (users only see if they are the creators or own a copy)
+  { title: 'Burn', component: Burn, private: true }, // private tab (users only see if they are the creators or own a copy)
+  { title: 'Transfer', component: Transfer, private: true }, // private tab (users only see if they are the creators or own a copy)
 ]
 
 const query_objkt = `
@@ -237,7 +237,7 @@ export const ObjktDisplay = () => {
               <Padding>
                 {restricted && (
                   <div style={{ color: 'white', background: 'black', textAlign: 'center' }}>
-                    restricted OBJKT
+                    Restricted OBJKT
                   </div>
                 )}
               </Padding>

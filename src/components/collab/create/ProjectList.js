@@ -24,7 +24,7 @@ export const ProjectList = ({ beneficiaries, onSelect }) => {
         <div className={showList ? styles.projectList : null}>
             <button className={btnClass} onClick={() => setShowList(!showList)}>
                 <Secondary>
-                    {showList ? 'close' : 'choose from popular projects'}
+                    {showList ? 'Close' : 'Choose from popular projects'}
                 </Secondary>
             </button>
 

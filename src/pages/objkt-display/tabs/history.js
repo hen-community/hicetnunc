@@ -39,12 +39,12 @@ export const History = (token_info) => {
                 <Padding>
                     <div className={styles.history__container}>
                         <div className={styles.history__labels}>
-                            <div className={styles.history__event} style={{ width: 'calc(7% + 35px)' }}>event</div>
-                            <div className={styles.history__from}>from</div>
-                            <div className={styles.history__to}>to</div>
-                            <div className={styles.history__ed}>ed.</div>
-                            <div className={styles.history__price}>price</div>
-                            <div className={styles.history__date}>time</div>
+                            <div className={styles.history__event} style={{ width: 'calc(7% + 35px)' }}>Event</div>
+                            <div className={styles.history__from}>From</div>
+                            <div className={styles.history__to}>To</div>
+                            <div className={styles.history__ed}>Ed.</div>
+                            <div className={styles.history__price}>Price</div>
+                            <div className={styles.history__date}>Time</div>
                         </div>
                         {
                             history.map(e => {
@@ -53,15 +53,15 @@ export const History = (token_info) => {
                                         <div className={`${styles.history}`} key={`t-${e.ophash}`}>
                                             <div className={styles.history__event__container}>
                                                 <TradeIcon />
-                                                <a href={`https://tzkt.io/${e.ophash}`} target="_blank" rel="noreferrer">trade</a>
+                                                <a href={`https://tzkt.io/${e.ophash}`} target="_blank" rel="noreferrer">Trade</a>
                                             </div>
 
                                             <div className={styles.history__from}>
-                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>from</div>{e.seller.name ? <span><a href={`/tz/${encodeURI(e.seller.address)}`} target="_blank" rel="noreferrer"><Primary>{encodeURI(e.seller.name)}</Primary></a></span> : <span><a href={`/tz/${e.seller.address}`}><Primary>{walletPreview(e.seller.address)}</Primary></a></span>}
+                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>From</div>{e.seller.name ? <span><a href={`/tz/${encodeURI(e.seller.address)}`} target="_blank" rel="noreferrer"><Primary>{encodeURI(e.seller.name)}</Primary></a></span> : <span><a href={`/tz/${e.seller.address}`}><Primary>{walletPreview(e.seller.address)}</Primary></a></span>}
                                             </div>
 
                                             <div className={styles.history__to}>
-                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>to</div>{e.buyer.name ? <span><a href={`/${encodeURI(e.buyer.name)}`} target="_blank" rel="noreferrer"><Primary>{encodeURI(e.buyer.name)}</Primary></a></span> : <span><a href={`/tz/${e.buyer.address}`}><Primary>{walletPreview(e.buyer.address)}</Primary></a></span>}
+                                                <div className={`${styles.history__mobile} ${styles.history__secondary}`}>To</div>{e.buyer.name ? <span><a href={`/${encodeURI(e.buyer.name)}`} target="_blank" rel="noreferrer"><Primary>{encodeURI(e.buyer.name)}</Primary></a></span> : <span><a href={`/tz/${e.buyer.address}`}><Primary>{walletPreview(e.buyer.address)}</Primary></a></span>}
                                             </div>
 
                                             <div className={`${styles.history__ed} ${styles.history__desktop}`}>
@@ -96,7 +96,7 @@ export const History = (token_info) => {
                                         <div className={`${styles.history}`} key={`s-${e.ophash}`}>
                                             <div className={styles.history__event__container}>
                                                 <SwapIcon />
-                                                <a href={`https://tzkt.io/${e.ophash}`} target="_blank" rel="noreferrer">swap</a>
+                                                <a href={`https://tzkt.io/${e.ophash}`} target="_blank" rel="noreferrer">Swap</a>
                                             </div>
 
                                             <div className={styles.history__from}>
@@ -141,7 +141,7 @@ export const History = (token_info) => {
                         <div className={styles.history} key="mint-op">
                             <div className={styles.history__event__container}>
                                 <MintedIcon />
-                                <div className={styles.history__mint__op}>minted</div>
+                                <div className={styles.history__mint__op}>Minted</div>
                             </div>
 
 
@@ -175,7 +175,7 @@ export const History = (token_info) => {
                         </div>
 
                         <div className={styles.history__royalties}>
-                            {token_info.royalties / 10}% royalties
+                            {token_info.royalties / 10}% Royalties
                         </div>
                     </div>
                 </Padding>
