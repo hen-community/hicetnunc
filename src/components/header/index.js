@@ -108,7 +108,7 @@ export const Header = () => {
                 <nav className={styles.content}>
                   <ul style={{ borderRight: '1px solid var(--border-color)' }}>
                     <li>
-                      <Button onClick={() => handleRoute('/explore')}>
+                      <Button onClick={() => handleRoute('/search')}>
                         <Primary>Search</Primary>
                       </Button>
                     </li>
