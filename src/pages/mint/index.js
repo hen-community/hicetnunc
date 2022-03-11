@@ -82,7 +82,7 @@ export const Mint = () => {
         setCollabs(managedCollabs || [])
       }
     })
-
+    if (hasStoredFields()) restoreFields()
     updateName()
   }, [acc]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -360,7 +360,7 @@ export const Mint = () => {
     return true
   }
 
-  const handleLocalCache = () => {
+  const restoreFields = () => {
     const title = window.localStorage.getItem('objkt::title')
     const description = window.localStorage.getItem('objkt::description')
     const tags = window.localStorage.getItem('objkt::tags')
@@ -380,11 +380,10 @@ export const Mint = () => {
       tags = ${tags}
       edition_count = ${edition_count}
       royalties = ${royalties}
-
     `);
   }
 
-  const hasLocalCache = () => {
+  const hasStoredFields = () => {
     const title = window.localStorage.getItem('objkt::title')
     const description = window.localStorage.getItem('objkt::description')
     const tags = window.localStorage.getItem('objkt::tags')
@@ -520,16 +519,7 @@ export const Mint = () => {
               </Padding>
             </Container>
           )}
-          {hasLocalCache() && (
-          <Container>
-            <Padding>
-              {/*disabled={!hasCache()} */}
-              <Button onClick={handleLocalCache} fit  >
-                <Curate>Restore</Curate>
-              </Button>
-            </Padding>
-          </Container>
-          )}
+
 
           <Container>
             <Padding>
