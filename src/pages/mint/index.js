@@ -383,6 +383,24 @@ export const Mint = () => {
     `);
   }
 
+  const clearFields = () => {
+      setTitle('')
+      setDescription('')
+      setTags('')
+      setAmount('')
+      setRoyalties('')
+
+      const keys = [
+        "objkt::title",
+        "objkt::description",
+        "objkt::tags",
+        "objkt::edition_count",
+        "objkt::royalties",
+      ]
+
+      keys.forEach((k) => window.localStorage.removeItem(k));
+  }
+
   const hasStoredFields = () => {
     const title = window.localStorage.getItem('objkt::title')
     const description = window.localStorage.getItem('objkt::description')
@@ -494,6 +512,18 @@ export const Mint = () => {
                 label="Royalties"
                 value={royalties}
               />
+            </Padding>
+          </Container>
+
+          <Container>
+            <Padding>
+            <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
+            <Button onClick={clearFields} fit>
+                  <Primary>
+                    Clear Fields
+                  </Primary>
+                </Button>
+                </div>
             </Padding>
           </Container>
 
