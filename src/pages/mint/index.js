@@ -1,23 +1,36 @@
-import classNames from 'classnames'
+import React, { useContext, useEffect, useState } from 'react'
 import Compressor from 'compressorjs'
 import ipfsHash from 'ipfs-only-hash'
 import _ from 'lodash'
-import { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Button, Curate, Primary, Purchase } from '../../components/button'
-import collabStyles from '../../components/collab/styles.module.scss'
-import { Input, Textarea } from '../../components/input'
-import { Container, Padding, Page } from '../../components/layout'
-import { Preview } from '../../components/preview'
-import { Upload } from '../../components/upload'
-import {
-  ALLOWED_COVER_FILETYPES_LABEL, ALLOWED_COVER_MIMETYPES, ALLOWED_FILETYPES_LABEL, ALLOWED_MIMETYPES, BURN_ADDRESS, MAX_EDITIONS, MAX_ROYALTIES, MIMETYPE, MINT_FILESIZE, MIN_ROYALTIES
-} from '../../constants'
 import { HicetnuncContext } from '../../context/HicetnuncContext'
-import { fetchGraphQL, getCollabsForAddress, getNameForAddress } from '../../data/hicdex'
-import { prepareDirectory, prepareFile } from '../../data/ipfs'
+import { Page, Container, Padding } from '../../components/layout'
+import { Input, Textarea } from '../../components/input'
+import { Button, Curate, Primary, Purchase } from '../../components/button'
+import { Upload } from '../../components/upload'
+import { Preview } from '../../components/preview'
+import { prepareFile, prepareDirectory } from '../../data/ipfs'
 import { prepareFilesFromZIP } from '../../utils/html'
+import {
+  ALLOWED_MIMETYPES,
+  ALLOWED_FILETYPES_LABEL,
+  ALLOWED_COVER_MIMETYPES,
+  ALLOWED_COVER_FILETYPES_LABEL,
+  MINT_FILESIZE,
+  MIMETYPE,
+  MAX_EDITIONS,
+  MIN_ROYALTIES,
+  MAX_ROYALTIES,
+  BURN_ADDRESS,
+} from '../../constants'
+import {
+  fetchGraphQL,
+  getCollabsForAddress,
+  getNameForAddress,
+} from '../../data/hicdex'
+import collabStyles from '../../components/collab/styles.module.scss'
+import classNames from 'classnames'
 import { CollabContractsOverview } from '../collaborate/tabs/manage'
+import { Link } from 'react-router-dom'
 
 const coverOptions = {
   quality: 0.85,
@@ -44,7 +57,7 @@ const uriQuery = `query uriQuery($address: String!, $ids: [String!] = "") {
       }
     }
   }
-}`;
+}`
 
 // @crzypathwork change to "true" to activate displayUri and thumbnailUri
 const GENERATE_DISPLAY_AND_THUMBNAIL = true
@@ -67,7 +80,6 @@ export const Mint = () => {
   const [needsCover, setNeedsCover] = useState(false)
   const [collabs, setCollabs] = useState([])
   const [selectCollab, setSelectCollab] = useState(false)
-
 
   // On mount, see if there are available collab contracts
   useEffect(() => {
@@ -105,7 +117,6 @@ export const Mint = () => {
   }
 
   const handleMint = async () => {
-
     if (!acc) {
       // warning for sync
       setFeedback({
@@ -179,7 +190,7 @@ export const Mint = () => {
       // ztepler: I have not understand the difference between acc.address and getAuth here
       //    so I am using acc.address (minterAddress) in both nftCid.address and in mint call
 
-      console.log({minterAddress})
+      console.log({ minterAddress })
 
       // upload file(s)
       let nftCid
@@ -197,7 +208,7 @@ export const Mint = () => {
           cover,
           thumbnail,
           generateDisplayUri: GENERATE_DISPLAY_AND_THUMBNAIL,
-          file
+          file,
         })
       } else {
         // process all other files
@@ -214,21 +225,29 @@ export const Mint = () => {
         })
       }
 
-      console.log("Calling mint with", { minterAddress, amount, path: nftCid.path, royalties })
+      console.log('Calling mint with', {
+        minterAddress,
+        amount,
+        path: nftCid.path,
+        royalties,
+      })
       mint(minterAddress, amount, nftCid.path, royalties)
     }
   }
 
   const isDoubleMint = async () => {
     const rawLeaves = false
-    const hashv0 = await ipfsHash.of(file.buffer, { cidVersion:0, rawLeaves })
-    const hashv1 = await ipfsHash.of(file.buffer, { cidVersion:1, rawLeaves })
+    const hashv0 = await ipfsHash.of(file.buffer, { cidVersion: 0, rawLeaves })
+    const hashv1 = await ipfsHash.of(file.buffer, { cidVersion: 1, rawLeaves })
     console.log(`Current CIDv0: ${hashv0}`)
     console.log(`Current CIDv1: ${hashv1}`)
 
     const uri0 = `ipfs://${hashv0}`
     const uri1 = `ipfs://${hashv1}`
-    const { errors, data } = await fetchGraphQL(uriQuery, 'uriQuery',  {"address": proxyAddress || acc.address,"ids":[uri0, uri1]})
+    const { errors, data } = await fetchGraphQL(uriQuery, 'uriQuery', {
+      address: proxyAddress || acc.address,
+      ids: [uri0, uri1],
+    })
 
     if (errors) {
       setFeedback({
@@ -242,7 +261,10 @@ export const Mint = () => {
       })
       return true
     } else if (data) {
-      const areAllTokensBurned = (data.hic_et_nunc_token || []).every((token) => _.get(token, 'token_holders.0.holder.address') === BURN_ADDRESS);
+      const areAllTokensBurned = (data.hic_et_nunc_token || []).every(
+        (token) =>
+          _.get(token, 'token_holders.0.holder.address') === BURN_ADDRESS
+      )
 
       if (areAllTokensBurned) {
         return false
@@ -261,11 +283,11 @@ export const Mint = () => {
       return true
     }
 
-    return false;
+    return false
   }
 
   const handlePreview = async () => {
-    if (!await isDoubleMint()) {
+    if (!(await isDoubleMint())) {
       setStep(1)
     }
   }
@@ -380,25 +402,25 @@ export const Mint = () => {
       tags = ${tags}
       edition_count = ${edition_count}
       royalties = ${royalties}
-    `);
+    `)
   }
 
   const clearFields = () => {
-      setTitle('')
-      setDescription('')
-      setTags('')
-      setAmount('')
-      setRoyalties('')
+    setTitle('')
+    setDescription('')
+    setTags('')
+    setAmount('')
+    setRoyalties('')
 
-      const keys = [
-        "objkt::title",
-        "objkt::description",
-        "objkt::tags",
-        "objkt::edition_count",
-        "objkt::royalties",
-      ]
+    const keys = [
+      'objkt::title',
+      'objkt::description',
+      'objkt::tags',
+      'objkt::edition_count',
+      'objkt::royalties',
+    ]
 
-      keys.forEach((k) => window.localStorage.removeItem(k));
+    keys.forEach((k) => window.localStorage.removeItem(k))
   }
 
   const hasStoredFields = () => {
@@ -408,7 +430,13 @@ export const Mint = () => {
     const edition_count = window.localStorage.getItem('objkt::edition_count')
     const royalties = window.localStorage.getItem('objkt::royalties')
 
-    return title != null || description != null || tags != null || edition_count != null || royalties != null
+    return (
+      title != null ||
+      description != null ||
+      tags != null ||
+      edition_count != null ||
+      royalties != null
+    )
   }
 
   // const proxyDisplay = proxyName || proxyAddress
@@ -419,13 +447,14 @@ export const Mint = () => {
     <Page title="Mint" large>
       {step === 0 && (
         <>
-
           {/* User has collabs available */}
           {collabs.length > 0 && (
             <Container>
               <Padding>
                 <div className={flexBetween}>
-                  <p><span style={{ opacity: 0.5 }}>minting as</span> {mintName}</p>
+                  <p>
+                    <span style={{ opacity: 0.5 }}>minting as</span> {mintName}
+                  </p>
                   <Button onClick={() => setSelectCollab(!selectCollab)}>
                     <Purchase>{selectCollab ? 'Cancel' : 'Change'}</Purchase>
                   </Button>
@@ -434,9 +463,7 @@ export const Mint = () => {
             </Container>
           )}
 
-          {selectCollab && (
-            <CollabContractsOverview showAdminOnly={true} />
-          )}
+          {selectCollab && <CollabContractsOverview showAdminOnly={true} />}
 
           <Container>
             <Padding>
@@ -445,10 +472,9 @@ export const Mint = () => {
                 onChange={(e) => {
                   setTitle(e.target.value)
                   window.localStorage.setItem('objkt::title', e.target.value)
-                  }
-                }
+                }}
                 placeholder="title"
-                label="title"
+                label="Title"
                 value={title}
               />
 
@@ -457,11 +483,13 @@ export const Mint = () => {
                 style={{ whiteSpace: 'pre' }}
                 onChange={(e) => {
                   setDescription(e.target.value)
-                  window.localStorage.setItem('objkt::description', e.target.value)
-                  }
-                }
+                  window.localStorage.setItem(
+                    'objkt::description',
+                    e.target.value
+                  )
+                }}
                 placeholder="description (max 5000 characters)"
-                label="description"
+                label="Description"
                 value={description}
               />
 
@@ -470,10 +498,9 @@ export const Mint = () => {
                 onChange={(e) => {
                   setTags(e.target.value)
                   window.localStorage.setItem('objkt::tags', e.target.value)
-                  }
-                }
+                }}
                 placeholder="tags (comma separated. example: illustration, digital)"
-                label="tags"
+                label="Tags"
                 value={tags}
               />
 
@@ -483,9 +510,11 @@ export const Mint = () => {
                 max={MAX_EDITIONS}
                 onChange={(e) => {
                   setAmount(e.target.value)
-                  window.localStorage.setItem('objkt::edition_count', e.target.value)
-                  }
-                }
+                  window.localStorage.setItem(
+                    'objkt::edition_count',
+                    e.target.value
+                  )
+                }}
                 onBlur={(e) => {
                   limitNumericField(e.target, 1, MAX_EDITIONS)
                   setAmount(e.target.value)
@@ -501,9 +530,11 @@ export const Mint = () => {
                 max={MAX_ROYALTIES}
                 onChange={(e) => {
                   setRoyalties(e.target.value)
-                  window.localStorage.setItem('objkt::royalties', e.target.value)
-                  }
-                }
+                  window.localStorage.setItem(
+                    'objkt::royalties',
+                    e.target.value
+                  )
+                }}
                 onBlur={(e) => {
                   limitNumericField(e.target, MIN_ROYALTIES, MAX_ROYALTIES)
                   setRoyalties(e.target.value)
@@ -517,13 +548,11 @@ export const Mint = () => {
 
           <Container>
             <Padding>
-            <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
-            <Button onClick={clearFields} fit>
-                  <Primary>
-                    Clear Fields
-                  </Primary>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Button onClick={clearFields} fit>
+                  <Primary>Clear Fields</Primary>
                 </Button>
-                </div>
+              </div>
             </Padding>
           </Container>
 
@@ -550,7 +579,6 @@ export const Mint = () => {
             </Container>
           )}
 
-
           <Container>
             <Padding>
               <Button onClick={handlePreview} fit disabled={handleValidation()}>
@@ -558,7 +586,6 @@ export const Mint = () => {
               </Button>
             </Padding>
           </Container>
-
         </>
       )}
 
@@ -607,9 +634,7 @@ export const Mint = () => {
 
       <Container>
         <Padding>
-          <Link to="/terms">
-            Terms & Conditions
-          </Link>
+          <Link to="/terms">Terms & Conditions</Link>
         </Padding>
       </Container>
       {/*       <BottomBanner>
