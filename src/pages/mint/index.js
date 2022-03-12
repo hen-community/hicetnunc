@@ -231,7 +231,8 @@ export const Mint = () => {
         path: nftCid.path,
         royalties,
       })
-      mint(minterAddress, amount, nftCid.path, royalties)
+      await mint(minterAddress, amount, nftCid.path, royalties)
+      clearFields()
     }
   }
 
