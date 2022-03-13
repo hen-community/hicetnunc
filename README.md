@@ -1,15 +1,15 @@
 # Teia UI
-![](https://img.shields.io/github/languages/code-size/teia-community/teia-ui?style=flat-square)
-![](https://img.shields.io/github/issues/teia-community/teia-ui?style=flat-square)
-![](https://img.shields.io/github/issues-pr/teia-community/teia-ui?style=flat-square)
-![](https://img.shields.io/github/license/teia-community/teia-ui?style=flat-square)
-![](https://img.shields.io/website?style=flat-square&url=https%3A%2F%2Fteia.art)
+![size of the repository](https://img.shields.io/github/languages/code-size/teia-community/teia-ui?style=flat-square)
+![number of opened issues](https://img.shields.io/github/issues/teia-community/teia-ui?style=flat-square&color=green)
+![number of opened PRs](https://img.shields.io/github/issues-pr/teia-community/teia-ui?style=flat-square)
+![license](https://img.shields.io/github/license/teia-community/teia-ui?style=flat-square)
+![website status](https://img.shields.io/website?style=flat-square&url=https%3A%2F%2Fteia.art)
 
 This repository is the frontend code of the open, community owned Tezos NFT Platform [teia.art](https://teia.art).
 
 **Find further info and documentation on the [Teia Wiki](https://github.com/teia-community/teia-docs/wiki/)**
 
-Teia a fork of the Tezos NFT platform [Hic et Nunc](https://www.hicetnunc.xyz/), build by the Teia commnunty for the Teia community with accessibility, sustainability, decentralisation and equity in mind. Read more about Teias [Core Values (Wiki)](https://github.com/teia-community/teia-docs/wiki/Core-Values-Code-of-Conduct-Terms-and-Conditions#1-core-values)
+> Teia a fork of the Tezos NFT platform [Hic et Nunc](https://www.hicetnunc.xyz/), build by the Teia community for the Teia community with accessibility, sustainability, decentralization and equity in mind. Read more about Teia's [Core Values (Wiki)](https://github.com/teia-community/teia-docs/wiki/Core-Values-Code-of-Conduct-Terms-and-Conditions#1-core-values)
 
 
 # Install
