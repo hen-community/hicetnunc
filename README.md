@@ -7,7 +7,7 @@
 
 This repository is the frontend code of the open, comminity owned Tezos NFT Platform [teia.art](https://teia.art).
 
-Find further info and documentation about Teia on the [Wiki]**(https://github.com/teia-community/teia-docs/wiki/) on the [Teia Documentation repository][https://github.com/teia-community/teia-docs)
+Find further info and documentation about Teia on the [Wiki](https://github.com/teia-community/teia-docs/wiki/) on the [Teia Documentation repository](https://github.com/teia-community/teia-docs)
 
 
 # Install
