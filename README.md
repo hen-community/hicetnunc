@@ -5,9 +5,9 @@
 ![](https://img.shields.io/github/license/teia-community/teia-ui?style=flat-square)
 ![](https://img.shields.io/website?style=flat-square&url=https%3A%2F%2Fteia.art)
 
-This repository is the frontend code of the open, comminity owned Tezos NFT Platform [teia.art](https://teia.art).
+This repository is the frontend code of the open, comminity owned Tezos NFT Platform [teia.art](https://teia.art), a fork of the Tezos NFT platform [Hic et Nunc](https://www.hicetnunc.xyz/).
 
-Find further info and documentation about Teia on the [Wiki](https://github.com/teia-community/teia-docs/wiki/) on the [Teia Documentation repository](https://github.com/teia-community/teia-docs)
+Find further info and documentation on the [Teia Wiki](https://github.com/teia-community/teia-docs/wiki/) at the [Teia Documentation repository](https://github.com/teia-community/teia-docs)
 
 
 # Install
@@ -17,11 +17,12 @@ git clone https://github.com/teia-community/teia-ui.git
 npm install
 npm start
 ```
+
 Article on [setting up a clone/mirror of Teia (Wiki)](https://github.com/teia-community/teia-docs/wiki/How-to-set-up-a-Teia-Mirror)
 
 # Contributing
 
-Please read our dedicated Article on [Contributing to the Teia code (Wiki)](https://github.com/teia-community/teia-docs/wiki/Contribute-to-the-Teia-Code) on the wiki.
+Find a dedicated Article on [Contributing to the Teia code](https://github.com/teia-community/teia-docs/wiki/Contribute-to-the-Teia-Code) on the wiki.
 
 # Code of Conduct
 
