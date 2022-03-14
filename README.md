@@ -24,7 +24,7 @@ Article about [setting up a clone/mirror of Teia (Wiki)](https://github.com/teia
 
 # Contributing
 
-Article about [Contributing to the Teia code (Wiki)](https://github.com/teia-community/teia-docs/wiki/Contribute-to-the-Teia-Code)
+Article about [contributing to the Teia code (Wiki)](https://github.com/teia-community/teia-docs/wiki/Contribute-to-the-Teia-Code)
 
 # Code of Conduct
 
