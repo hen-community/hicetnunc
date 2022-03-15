@@ -40,7 +40,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "read-json-lines-sync": "^2.1.7",
-    "screenfull": "^5.1.0"
+    "screenfull": "^6.0.1"
   },
   "scripts": {
     "start": "export REACT_APP_BUILD_COMMIT=$(git rev-parse HEAD) && react-scripts start",
